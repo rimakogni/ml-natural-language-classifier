@@ -1,0 +1,7 @@
+venv 
+**pycache**
+
+data/
+json_data/
+*.feat
+*.txt
