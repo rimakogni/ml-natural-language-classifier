@@ -5,3 +5,5 @@ data/
 json_data/
 *.feat
 *.txt
+aclImdb/
+aclImdb_v1.tar.gz

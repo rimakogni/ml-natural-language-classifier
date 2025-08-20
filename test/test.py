@@ -1,4 +1,4 @@
-from MovieReviewClassifier import MovieReviewClassifier
+from src.logic.MovieReviewClassifier import MovieReviewClassifier
 # import pickle
 
 movie_review_classifier = MovieReviewClassifier("./multiNB_model.pkl")

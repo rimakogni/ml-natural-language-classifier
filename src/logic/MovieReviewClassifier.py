@@ -22,4 +22,4 @@ class MovieReviewClassifier:
             return 'Positive'
         else:
             return 'Wrong input'
-    pass    
+   
