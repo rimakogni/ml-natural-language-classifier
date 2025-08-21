@@ -13,6 +13,7 @@ class MovieReviewClassifier:
         with open('./vectorizer.pkl', 'rb') as f:
             self.vectorizer = pickle.load(f)
         
+      
     def classify_review(self, review):
         print(review)
         predicted = self.model.predict(self.vectorizer.transform([review]))

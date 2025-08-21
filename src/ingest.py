@@ -19,10 +19,10 @@ def extract(path, pos_or_neg):
 def get_all_review_data():
     whole_data = []
     
-    test_neg = extract('./data/aclImdb/test/neg', 0)
-    test_pos = extract('./data/aclImdb/test/pos', 1)
-    train_neg = extract('./data/aclImdb/train/neg', 0)
-    train_pos = extract('./data/aclImdb/train/pos', 1)
+    test_neg = extract('./aclImdb/test/neg', 0)
+    test_pos = extract('./aclImdb/test/pos', 1)
+    train_neg = extract('./aclImdb/train/neg', 0)
+    train_pos = extract('./aclImdb/train/pos', 1)
 
     for item in test_neg:
         whole_data.append(item)

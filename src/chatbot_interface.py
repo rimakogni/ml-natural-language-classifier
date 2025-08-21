@@ -11,7 +11,7 @@ class Chatbot_Interface:
         self.tokenizer = AutoTokenizer.from_pretrained(model)
         self.model = AutoModelForCausalLM.from_pretrained(model)
         self.classifier = MovieReviewClassifier(classifier_model_path)
-
+        
     def encode_promp(self,prompt):
         return self.tokenizer(prompt,return_tensors="pt")
     
@@ -44,23 +44,28 @@ class Chatbot_Interface:
 
         
         extraction_prompt = (
-            f"{self.system_prompt}\n\n"
-            f"User:\n{user_message}\n\n"
-            f"Assistant:\n"
+            f"{self.system_prompt}\n{user_message}\n\n"  
         )
         extracted_review = self._generate_llm(extraction_prompt)
 
+        extracted_review_vect = self.classifier.vectorizer.transform([extracted_review])
+        proba_row = self.classifier.model.predict_proba(extracted_review_vect)[0]
+        classes = self.classifier.model.classes_
+        print("DEBUG → Classes:", classes)
+        print("DEBUG → Probabilities:", proba_row)
+        confidence = round((float(proba_row.max())),2)
         sentiment_label = self.classifier.classify_review(extracted_review)
-
+       
         final_prompt = (
             "You are a helpful assistant. "
             "Write a concise, friendly reply to the user about their movie review, "
-            "using the extracted review text and the classifier's sentiment. "
+            "using the extracted review text and the classifier sentiment. "
             "Keep it under 3 sentences and be clear.\n\n"
-            f"Extracted review: \"{extracted_review}\"\n"
-            f"Classifier sentiment: {sentiment_label}\n"
-            f"Original user message: \"{user_message}\"\n\n"
-            "Assistant:\n"
+            f"extracted review text: \"{extracted_review}\"\n\n"
+            f"classifier sentiment:  {sentiment_label}\n\n"
+            f"confidence: {confidence}\n"
+            #f"{user_message}\n"
+            
         )
         final_reply = self._generate_llm(final_prompt, max_new_tokens=160, temperature=0.7)
         return final_reply

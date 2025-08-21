@@ -5,6 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import f1_score, precision_score, recall_score, confusion_matrix, accuracy_score
 import pandas as pd
 import numpy as np
+import pickle
 
 RANDOM_SEED = 2042
 
@@ -42,7 +43,7 @@ print(confusion_matrix(y_test, y_pred))
 print(model.predict(vectorizer.transform(['this movie is good'])))
 
 # Example of using pickle to save a model.
-import pickle
+
 
 # Save
 with open('multiNB_model.pkl', 'wb') as f:
